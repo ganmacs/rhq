@@ -1,5 +1,5 @@
 require 'rhq/actions/base'
-require 'rhq/runner'
+require 'rhq/local_repo'
 
 module Rhq
   module Action
@@ -7,21 +7,22 @@ module Rhq
       def call
         travarse.each do |e|
           puts e
+          end
         end
       end
 
       private
 
       def travarse
-        Dir.glob("#{root_dir}/**/").select { |e| Dir.exist?("#{e}/.git") }
+        Dir.glob("#{root_dir}/**/").select { |e| Dir.exist?("#{e}/.git") }.map do |p|
+          LocalRepo.new(p)
+        end
       end
 
-      def root_dir
-        @root_dir ||= File.expand_path(root)
-      end
-
-      def root
-        Runner.new.run('git', 'config', '--null', '--get', 'ghq.root')[:stdout]
+      def opts
+        @opts ||= Slop.parse(@args, suppress_errors: true) do |opts|
+          opts.bool '-p', '--fullpath', 'show fullpath'
+        end
       end
     end
   end
