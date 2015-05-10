@@ -1,8 +1,5 @@
-require 'open3'
-require 'pathname'
 require 'rhq/actions/base'
-require 'find'
-require 'pp'
+require 'rhq/runner'
 
 module Rhq
   module Action
@@ -20,11 +17,11 @@ module Rhq
       end
 
       def root_dir
-        @root_dir ||= File.expand_path(run[0].strip)
+        @root_dir ||= File.expand_path(root)
       end
 
-      def run
-        stdout, stderr, status = Open3.capture3('git config --null --get ghq.root')
+      def root
+        Runner.new.run('git', 'config', '--null', '--get', 'ghq.root')[:stdout]
       end
     end
   end

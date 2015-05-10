@@ -1,4 +1,5 @@
-require 'rhq/action_builder'
+require 'rhq/actions/list'
+require 'rhq/actions/get'
 
 module Rhq
   class Command
@@ -7,17 +8,28 @@ module Rhq
     end
 
     def call
-      action.call
+      case action_type
+      when 'get'
+        get
+      when 'list'
+        list
+      else
+        raise "Invalid type: #{action_type}"
+      end
     end
 
     private
 
-    def action
-      @action ||= Rhq::ActionBuilder.new(action_type).call
+    def get
+      Rhq::Action::Get.new(@args).call
+    end
+
+    def list
+      Rhq::Action::List.new([]).call
     end
 
     def action_type
-      @args[0]
+      @args.first
     end
   end
 end
