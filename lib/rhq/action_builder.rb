@@ -9,16 +9,23 @@ module Rhq
     end
 
     def build(args)
-      case @type
-      when 'get'
-        Action::Get.new(args)
-      when 'list'
-        Action::List.new(args)
-      when 'root'
-        Action::Root.new(args)
-      else
-        raise "Invalid action type: #{@type}"
-      end
+      action_class.new(args)
+    end
+
+    private
+
+    def action_class
+      @action_class ||=
+        case @type
+        when 'get'
+          Action::Get
+        when 'list'
+          Action::List
+        when 'root'
+          Action::Root
+        else
+          raise "Invalid action type: #{@type}"
+        end
     end
   end
 end
