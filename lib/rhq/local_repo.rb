@@ -1,39 +1,61 @@
+require 'rhq/url'
 require 'uri'
 require 'pathname'
 
 module Rhq
   class LocalRepo
-    # args is path
     def initialize(path)
-      @path = expand(path)
+      @path = path
     end
 
-    def path
-      @path.to_s
+    def full_path
+      @full_path ||= "#{Url.root_path}/#{rel_path}"
+    end
+
+    def rel_path
+      @rel_path ||= "#{host}#{path}"
+    end
+
+    # if `rel_path` is github.com/ganamcs/rhq
+    # then return ["github.com/ganamcs/rhq", "ganamcs/rhq", "rhq"]
+    def path_parts
+      @path_parts ||= begin
+          parts = rel_path.split('/')
+          parts.map.with_index  do |_, i|
+            parts.slice(i..-1).join('/')
+          end
+        end
     end
 
     def exist?
-      return false if @path.nil?
-      File.exist?(@path)
+      File.exist?(ful_path)
     end
 
     private
 
-    def expand(path)
-      uri = URI.parse(path)
-      p = uri.path
-      p = p.sub(/\.git\Z/, '') if p.end_with?('.git')
-      p.insert(0, '/') if p[0] != '/'
-      host = uri.host || 'github.com'
-      Pathname.new(root_dir + '/' + host + p)
+    def path
+      @_path ||=
+        if uri.path[0] == '/'
+          uri.path
+        else
+          '/' + uri.path
+        end
     end
 
-    def root_dir
-      File.expand_path(root)
+    def host
+      @host ||= (uri.host || 'github.com')
     end
 
-    def root
-      Runner.new.run('git', 'config', '--null', '--get', 'ghq.root')[:stdout]
+    def uri
+      @uri ||= URI.parse(trimed_git_path)
+    end
+
+    def trimed_git_path
+      if @path.end_with?('.git')
+        @path.sub(/\.git\Z/, '')
+      else
+        @path
+      end
     end
   end
 end
