@@ -34,7 +34,7 @@ module Rhq
     end
 
     def exist?
-      File.exist?(ful_path)
+      File.exist?(full_path)
     end
 
     private
