@@ -39,11 +39,7 @@ module Rhq
       end
 
       def root_path
-        @root_dir ||= File.expand_path(root)
-      end
-
-      def root
-        Runner.new.run('git', 'config', '--null', '--get', 'ghq.root')[:stdout]
+        Url.root_path
       end
     end
   end

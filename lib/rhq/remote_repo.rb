@@ -8,13 +8,13 @@ module Rhq
     end
 
     def url
-      @path_str ||= @path.to_s
+      path.to_s
     end
 
     private
 
     def path
-      @path ||= build_path
+      @_path ||= build_path(@path)
     end
 
     def build_path(path)
