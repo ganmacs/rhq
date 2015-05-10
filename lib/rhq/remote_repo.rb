@@ -4,16 +4,20 @@ module Rhq
   class RemoteRepo
     # @path String
     def initialize(path)
-      @path = expand(path)
+      @path = path
     end
 
-    def path
+    def url
       @path_str ||= @path.to_s
     end
 
     private
 
-    def expand(path)
+    def path
+      @path ||= build_path
+    end
+
+    def build_path(path)
       u = URI.parse(path)
       if u.relative?
         u.scheme = 'https'
