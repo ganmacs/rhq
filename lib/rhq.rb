@@ -1,4 +1,4 @@
-require "rhq/version"
+require 'rhq/version'
 
 module Rhq
   # Your code goes here...
