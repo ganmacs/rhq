@@ -1,5 +1,4 @@
 require 'rhq/actions/base'
-require 'rhq/local_repo'
 
 module Rhq
   module Action
