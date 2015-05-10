@@ -22,7 +22,7 @@ module Rhq
       end
 
       def local_repo
-        @local ||= LocalRepo.new(@args[1])
+        @local_repo ||= LocalRepo.new(@args[1])
       end
 
       def remote_repo
