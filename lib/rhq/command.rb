@@ -28,11 +28,11 @@ module Rhq
     end
 
     def list
-      Rhq::Action::List.new([]).call
+      Rhq::Action::List.new(@args).call
     end
 
     def root
-      Rhq::Action::Root.new([]).call
+      Rhq::Action::Root.new(@args).call
     end
 
     def action_type
