@@ -29,7 +29,7 @@ module Rhq
         @remote_repo ||= RemoteRepo.new(@args[1])
       end
 
-      def root_dir
+      def root_path
         @root_dir ||= File.expand_path(root)
       end
 

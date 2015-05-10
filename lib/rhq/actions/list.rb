@@ -17,7 +17,7 @@ module Rhq
       private
 
       def travarse
-        Dir.glob("#{root_dir}/**/").select { |e| Dir.exist?("#{e}/.git") }.map do |full_path|
+        Dir.glob("#{root_path}/**/").select { |e| Dir.exist?("#{e}/.git") }.map do |full_path|
           LocalRepo.new_from_full_path(full_path)
         end
       end

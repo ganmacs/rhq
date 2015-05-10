@@ -4,7 +4,8 @@ module Rhq
   module Action
     class Root < Base
       def call
-        print root_dir
+        puts root_path
+      end
       end
     end
   end
