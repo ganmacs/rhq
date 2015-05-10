@@ -16,6 +16,15 @@ module Rhq
 
       private
 
+      def target_path
+        opts.args[1] or raise 'Require clone path'
+      end
+
+      # retrun Slop object
+      def opts
+        raise NotImplementedError
+      end
+
       # TODO use buidler class
       def backend
         @backend ||= Backend::Git.new

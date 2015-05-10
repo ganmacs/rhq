@@ -6,6 +6,9 @@ module Rhq
       def call
         puts root_path
       end
+
+      def opts
+        []
       end
     end
   end
