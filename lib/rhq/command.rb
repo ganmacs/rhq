@@ -1,5 +1,6 @@
 require 'rhq/actions/list'
 require 'rhq/actions/get'
+require 'rhq/actions/root'
 
 module Rhq
   class Command
@@ -13,6 +14,8 @@ module Rhq
         get
       when 'list'
         list
+      when 'root'
+        root
       else
         raise "Invalid type: #{action_type}"
       end
@@ -26,6 +29,10 @@ module Rhq
 
     def list
       Rhq::Action::List.new([]).call
+    end
+
+    def root
+      Rhq::Action::Root.new([]).call
     end
 
     def action_type

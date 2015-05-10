@@ -6,6 +6,10 @@ module Rhq
       def initialize(args)
         @args = args
       end
+
+      def call
+        raise NotImplementedError
+      end
     end
   end
 end
