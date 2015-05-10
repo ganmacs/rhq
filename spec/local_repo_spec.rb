@@ -31,4 +31,10 @@ describe Rhq::LocalRepo do
     let(:path) { 'https://github.com/ganmacs/rhq.git' }
     it_should_behave_like 'has some type paths'
   end
+
+  describe 'Receive full path' do
+    let(:path) { '/Users/ganmacs/src/github.com/ganmacs/rhq' }
+    let(:repo) { described_class.new_from_full_path(path) }
+    it_should_behave_like 'has some type paths'
+  end
 end

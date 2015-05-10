@@ -6,7 +6,10 @@ module Rhq
     class List < Base
       def call
         travarse.each do |e|
-          puts e
+          if fullpath?
+            puts e.full_path
+          else
+            puts e.rel_path
           end
         end
       end
@@ -14,9 +17,13 @@ module Rhq
       private
 
       def travarse
-        Dir.glob("#{root_dir}/**/").select { |e| Dir.exist?("#{e}/.git") }.map do |p|
-          LocalRepo.new(p)
+        Dir.glob("#{root_dir}/**/").select { |e| Dir.exist?("#{e}/.git") }.map do |full_path|
+          LocalRepo.new_from_full_path(full_path)
         end
+      end
+
+      def fullpath?
+        opts[:fullpath]
       end
 
       def opts

@@ -4,6 +4,12 @@ require 'pathname'
 
 module Rhq
   class LocalRepo
+    class << self
+      def new_from_full_path(full_path)
+        new('https://' + full_path.gsub(%r{\A#{Url.root_path}/}, '')) # FIXME
+      end
+    end
+
     def initialize(path)
       @path = path
     end
