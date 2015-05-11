@@ -4,21 +4,18 @@ module Rhq
   module Action
     class List < Base
       def call
-        travarse.each do |e|
-          if fullpath?
-            puts e.full_path
-          else
-            puts e.rel_path
-          end
+        traverse_local_repo do |e|
+          puts fullpath? ? e.full_path : e.rel_path
         end
       end
 
       private
 
-      def travarse
-        Dir.glob("#{root_path}/**/").select { |e| Dir.exist?("#{e}/.git") }.map do |full_path|
-          LocalRepo.new_from_full_path(full_path)
-        end
+      def traverse_local_repo(&block)
+        Dir.glob("#{root_path}/**/")
+          .select { |e| Dir.exist?("#{e}/.git") }
+          .map { |full_path| LocalRepo.new_from_full_path(full_path) }
+          .each { |e| block.call(e) }
       end
 
       def fullpath?
