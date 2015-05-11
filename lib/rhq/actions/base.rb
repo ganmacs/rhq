@@ -31,11 +31,11 @@ module Rhq
       end
 
       def local_repo
-        @local_repo ||= LocalRepo.new(@args[1])
+        @local_repo ||= LocalRepo.new(target_path)
       end
 
       def remote_repo
-        @remote_repo ||= RemoteRepo.new(@args[1])
+        @remote_repo ||= RemoteRepo.new(target_path)
       end
 
       def root_path
