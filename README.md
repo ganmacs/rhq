@@ -1,5 +1,8 @@
 # Rhq
 
+[![Build Status](https://travis-ci.org/ganmacs/rhq.svg?branch=master)](https://travis-ci.org/ganmacs/rhq)
+[![Code Climate](https://codeclimate.com/github/ganmacs/rhq/badges/gpa.svg)](https://codeclimate.com/github/ganmacs/rhq)
+
 ruby version ghq
 
 ## Installation
