@@ -2,6 +2,7 @@ require 'rhq/local_repo'
 
 describe Rhq::LocalRepo do
   let(:repo) { described_class.new(path) }
+  before { allow(Rhq::Url).to receive(:root_path).and_return(STUB_ROOT_PATH) }
 
   shared_examples_for 'has some type paths' do
     it 'has full path' do

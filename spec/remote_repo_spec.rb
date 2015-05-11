@@ -2,6 +2,7 @@ require 'rhq/remote_repo'
 
 describe Rhq::RemoteRepo do
   let(:repo) { described_class.new(path, ssh) }
+  before { allow(Rhq::Url).to receive(:root_path).and_return(STUB_ROOT_PATH) }
 
   shared_examples_for 'remote path' do
     context 'without ssh flg' do
